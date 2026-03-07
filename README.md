@@ -1,87 +1,87 @@
 # OrderIt
 
-App para tablets Android que usan los meseros en un restaurante para gestionar pedidos, consultar el menu, ver metricas y administrar ordenes en tiempo real.
+Android tablet app used by waiters in a restaurant to manage orders, browse the menu, view metrics, and handle orders in real time.
 
-## Arquitectura
+## Architecture
 
-**Clean Architecture + MVVM** con Jetpack Compose.
+**Clean Architecture + MVVM** with Jetpack Compose.
 
 ```
 com.orderit/
-├── core/           # DI (Hilt modules), networking (Retrofit), utilidades
+├── core/           # DI (Hilt modules), networking (Retrofit), utilities
 ├── data/           # DTOs (@Serializable), repository implementations, SessionStore
-├── domain/         # Repository interfaces, modelos de dominio
-└── ui/             # Compose screens, ViewModels (StateFlow), componentes, theme
+├── domain/         # Repository interfaces, domain models
+└── ui/             # Compose screens, ViewModels (StateFlow), components, theme
 ```
 
-| Capa | Responsabilidad |
-|------|----------------|
-| **UI** | Jetpack Compose screens + ViewModels con `StateFlow` |
-| **Domain** | Interfaces de repositorio y modelos de dominio |
-| **Data** | Implementaciones de repositorio, API service (Retrofit), almacenamiento local |
+| Layer | Responsibility |
+|-------|---------------|
+| **UI** | Jetpack Compose screens + ViewModels with `StateFlow` |
+| **Domain** | Repository interfaces and domain models |
+| **Data** | Repository implementations, API service (Retrofit), local storage |
 
 ## Tech Stack
 
-| Categoria | Tecnologia | Version |
-|-----------|-----------|---------|
+| Category | Technology | Version |
+|----------|-----------|---------|
 | UI | Jetpack Compose (Material3) | BOM 2025.12.01 |
-| Navegacion | Navigation Compose (type-safe) | 2.9.6 |
+| Navigation | Navigation Compose (type-safe) | 2.9.6 |
 | DI | Dagger Hilt | 2.57.2 |
 | Networking | Retrofit + OkHttp | 3.0.0 / 5.3.2 |
-| Serializacion | kotlinx-serialization-json | 1.9.0 |
-| Imagenes | Coil Compose | 2.7.0 |
+| Serialization | kotlinx-serialization-json | 1.9.0 |
+| Images | Coil Compose | 2.7.0 |
 | Analytics | Firebase Crashlytics + Analytics | BOM 34.7.0 |
-| Lenguaje | Kotlin | 2.2.0 |
+| Language | Kotlin | 2.2.0 |
 | Min SDK | Android 11 (API 30) | - |
 | Target SDK | Android 16 (API 36) | - |
 
-## Pantallas
+## Screens
 
-| Pantalla | Descripcion |
-|----------|------------|
-| **Login** | Autenticacion por username del mesero |
-| **Dashboard** | Resumen del dia: total ordenes, ventas, conteo por status, productos destacados |
-| **Ordenes** | Grid de ordenes con panel lateral de detalle (status, productos, pago) |
-| **Menu** | Catalogo de productos por categoria con formulario para crear/editar productos |
-| **Metricas** | Estadisticas: ingresos, promedio por orden, top productos, desglose por status |
+| Screen | Description |
+|--------|------------|
+| **Login** | Username-based waiter authentication |
+| **Dashboard** | Daily summary: total orders, sales, status counts, featured products |
+| **Orders** | Order grid with a side detail panel (status, products, payment) |
+| **Menu** | Product catalog by category with a form to create/edit products |
+| **Metrics** | Statistics: revenue, average order value, top products, status breakdown |
 
 ## API
 
-Backend REST deployado en Google Cloud Run.
+REST backend deployed on Google Cloud Run.
 
 ```
 Base URL: https://orderit-806794513763.us-east1.run.app/
 ```
 
-Endpoints principales: `/waiters`, `/categories`, `/products`, `/tables`, `/orders`, `/orders/{id}/details`
+Main endpoints: `/waiters`, `/categories`, `/products`, `/tables`, `/orders`, `/orders/{id}/details`
 
 ## Setup
 
-### Requisitos
+### Requirements
 
-- Android Studio Ladybug o superior
+- Android Studio Ladybug or later
 - JDK 11+
-- Tablet Android o emulador (API 30+, landscape)
+- Android tablet or emulator (API 30+, landscape)
 
-### Pasos
+### Steps
 
-1. Clona el repositorio
+1. Clone the repository
    ```bash
    git clone <repo-url>
    cd OrderIt
    ```
 
-2. Agrega tu archivo `google-services.json` de Firebase en `app/`
-   > Este archivo no esta en el repo por seguridad. Obtenlo desde la consola de Firebase del proyecto.
+2. Add your Firebase `google-services.json` file inside `app/`
+   > This file is not included in the repo for security reasons. Get it from the Firebase console for this project.
 
-3. Sincroniza y compila desde Android Studio o terminal:
+3. Sync and build from Android Studio or the terminal:
    ```bash
    ./gradlew assembleDebug
    ```
 
-4. Corre en un emulador de tablet en modo landscape.
+4. Run on a tablet emulator in landscape mode.
 
-## Estructura de archivos
+## File Structure
 
 ```
 app/src/main/java/com/orderit/
@@ -92,14 +92,14 @@ app/src/main/java/com/orderit/
 │   │   ├── NetworkModule.kt         # Retrofit, OkHttp, Json providers
 │   │   └── RepositoryModule.kt      # Repository bindings
 │   ├── network/
-│   │   └── OrderItApi.kt            # Retrofit interface (todos los endpoints)
+│   │   └── OrderItApi.kt            # Retrofit interface (all endpoints)
 │   ├── result/
 │   │   └── AppResult.kt             # Sealed class Ok/Err + safeApiCall()
 │   └── util/
-│       └── TimeUtils.kt             # "Hace X min" helper, formateo de fechas
+│       └── TimeUtils.kt             # "X min ago" helper, date formatting
 ├── data/
 │   ├── local/
-│   │   └── SessionStore.kt          # SharedPreferences para sesion del mesero
+│   │   └── SessionStore.kt          # SharedPreferences for waiter session
 │   ├── model/
 │   │   ├── CategoryDto.kt
 │   │   ├── DiningTableDto.kt
@@ -114,7 +114,7 @@ app/src/main/java/com/orderit/
 │       └── WaiterRepositoryImpl.kt
 ├── domain/
 │   ├── model/
-│   │   └── OrderWithDetails.kt      # Orden + detalles + productos resueltos
+│   │   └── OrderWithDetails.kt      # Order + details + resolved products
 │   └── repository/
 │       ├── CategoryRepository.kt
 │       ├── OrderRepository.kt
@@ -122,8 +122,8 @@ app/src/main/java/com/orderit/
 │       └── WaiterRepository.kt
 └── ui/
     ├── components/
-    │   ├── SideBar.kt                # Navegacion lateral permanente
-    │   └── TopBar.kt                 # Barra de busqueda + carrito
+    │   ├── SideBar.kt                # Permanent side navigation
+    │   └── TopBar.kt                 # Search bar + cart icon
     ├── dashboard/
     │   ├── DashboardScreen.kt
     │   └── DashboardViewModel.kt
@@ -133,16 +133,16 @@ app/src/main/java/com/orderit/
     ├── menu/
     │   ├── MenuScreen.kt
     │   ├── MenuViewModel.kt
-    │   └── ProductFormPanel.kt       # Formulario crear/editar producto
+    │   └── ProductFormPanel.kt       # Create/edit product form
     ├── metrics/
     │   ├── MetricsScreen.kt
     │   └── MetricsViewModel.kt
     ├── navigation/
-    │   ├── MainScaffold.kt           # Layout principal (sidebar + content)
+    │   ├── MainScaffold.kt           # Main layout (sidebar + content)
     │   ├── NavGraph.kt               # Login vs Main routing
     │   └── Routes.kt                 # Type-safe routes
     ├── orders/
-    │   ├── OrdersScreen.kt           # Grid + panel de detalle
+    │   ├── OrdersScreen.kt           # Grid + detail panel
     │   └── OrdersViewModel.kt
     └── theme/
         ├── Color.kt
