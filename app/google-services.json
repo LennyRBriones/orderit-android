@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001594760794",
+    "project_id": "orderit-7b391",
+    "storage_bucket": "orderit-7b391.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001594760794:android:edd26775491c3d549df263",
+        "android_client_info": {
+          "package_name": "com.orderit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAegrT5cx4UCu4kg3n81Piff6vbCHbYiU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
